@@ -1,0 +1,34 @@
+Description: Adjust documentation after removing logos
+Author: Stephen Kitt <skitt@debian.org>
+
+--- a/docs/install.rst
++++ b/docs/install.rst
+@@ -8,19 +8,20 @@
+ 
+     <div style="margin:1em;">
+     <a href="https://aur.archlinux.org/packages/python-evdev/">
+-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-archlinux.png">
++      Arch Linux
+     </a>
+     <a href="http://packages.ubuntu.com/wily/python-evdev">
+-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-ubuntu.png">
++      Ubuntu
+     </a>
+-    <a href="https://copr.fedorainfracloud.org/coprs/gvalkov/python-evdev/">
+-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-fedora.png">
++    <a
++    href="https://copr.fedorainfracloud.org/coprs/gvalkov/python-evdev/">
++      Fedora
+     </a>
+     <!--
+-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-raspbian.png"></a>
+-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-debian.png"></a>
+-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-linux-mint.png"></a>
+-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-opensuse.png"></a>
++    <a href="">Raspbian</a>
++    <a href="">Debian</a>
++    <a href="">Linux Mint</a>
++    <a href="">OpenSuse</a>
+     --!>
+     </div>
+ 

@@ -1,0 +1,2 @@
+# Ubuntu carried this for Python 2 previously
+python-evdev: new-package-should-not-package-python2-module python-evdev

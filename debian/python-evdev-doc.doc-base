@@ -1,0 +1,11 @@
+Document: python-evdev
+Title: Debian python-evdev manual
+Author: Georgi Valkov
+Abstract: This manual describes what python-evdev is
+ and how it can be used to access the input subsystem
+ from Python code.
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-evdev-doc/html/index.html
+Files: /usr/share/doc/python-evdev-doc/html/*.html
