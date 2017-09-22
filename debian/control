@@ -1,19 +1,29 @@
 Source: python-evdev
+Maintainer: Stephen Kitt <skitt@debian.org>
 Section: python
 Priority: optional
-Maintainer: Stephen Kitt <skitt@debian.org>
-Build-Depends: debhelper (>= 10), dh-python, python-setuptools, python3-setuptools, python3-docutils, python3-sphinx, python3-sphinx-rtd-theme, python-all-dev, python3-all-dev
+Build-Depends: debhelper (>= 10),
+               dh-python,
+               python-setuptools,
+               python3-setuptools,
+               python3-docutils,
+               python3-sphinx,
+               python3-sphinx-rtd-theme,
+               python-all-dev,
+               python3-all-dev
 Standards-Version: 4.1.0
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/python-evdev.git
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/python-evdev.git
 Homepage: https://github.com/gvalkov/python-evdev
+Testsuite: autopkgtest-pkg-python
 X-Python-Version: >= 2.6
 X-Python3-Version: >= 3.2
-Vcs-Git: https://anonscm.debian.org/git/collab-maint/python-evdev.git
-Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/python-evdev.git
-Testsuite: autopkgtest-pkg-python
 
 Package: python-evdev
 Architecture: linux-any
-Depends: ${python:Depends}, ${misc:Depends}, ${shlibs:Depends}
+Depends: ${python:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends}
 Suggests: python-evdev-doc
 Description: Python bindings for the Linux input subsystem
  This package provides bindings to the generic input event interface
@@ -30,7 +40,9 @@ Description: Python bindings for the Linux input subsystem
 
 Package: python3-evdev
 Architecture: linux-any
-Depends: ${python3:Depends}, ${misc:Depends}, ${shlibs:Depends}
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends}
 Suggests: python-evdev-doc
 Description: Python 3 bindings for the Linux input subsystem
  This package provides bindings to the generic input event interface
@@ -48,7 +60,8 @@ Description: Python 3 bindings for the Linux input subsystem
 Package: python-evdev-doc
 Architecture: all
 Section: doc
-Depends: ${sphinxdoc:Depends}, ${misc:Depends}
+Depends: ${sphinxdoc:Depends},
+         ${misc:Depends}
 Description: Python bindings for the Linux input subsystem (docs)
  This package provides bindings to the generic input event interface
  in Linux. The evdev interface serves the purpose of passing events
