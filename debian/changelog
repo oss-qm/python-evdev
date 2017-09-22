@@ -1,6 +1,7 @@
 python-evdev (0.7.0+dfsg-2) UNRELEASED; urgency=medium
 
   * Limit the architecture to linux-any. Closes: #875624.
+  * Switch to Python 3 Docutils and Sphinx.
 
  -- Stephen Kitt <skitt@debian.org>  Tue, 12 Sep 2017 21:18:17 +0200
 

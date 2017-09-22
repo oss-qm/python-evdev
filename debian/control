@@ -2,7 +2,7 @@ Source: python-evdev
 Section: python
 Priority: optional
 Maintainer: Stephen Kitt <skitt@debian.org>
-Build-Depends: debhelper (>= 10), dh-python, python-setuptools, python3-setuptools, python-docutils, python-sphinx, python-sphinx-rtd-theme, python-all-dev, python3-all-dev
+Build-Depends: debhelper (>= 10), dh-python, python-setuptools, python3-setuptools, python3-docutils, python3-sphinx, python3-sphinx-rtd-theme, python-all-dev, python3-all-dev
 Standards-Version: 4.1.0
 Homepage: https://github.com/gvalkov/python-evdev
 X-Python-Version: >= 2.6
