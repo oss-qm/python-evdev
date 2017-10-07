@@ -1,7 +1,9 @@
 python-evdev (0.7.0+dfsg-2) UNRELEASED; urgency=medium
 
   * Limit the architecture to linux-any. Closes: #875624.
-  * Switch to Python 3 Docutils and Sphinx.
+  * Switch to Python 3 Docutils and Sphinx, build-conflicting on
+    python-sphinx to avoid issues with that being picked in preference to
+    python3-sphinx.
   * Clean up debian/control with cme.
   * Drop the new-package-should-not-package-python2-module override
     since this is no longer a new package.
