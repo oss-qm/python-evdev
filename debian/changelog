@@ -1,9 +1,10 @@
-python-evdev (0.7.0+dfsg-3) UNRELEASED; urgency=medium
+python-evdev (0.8.1+dfsg-1) UNRELEASED; urgency=medium
 
+  * New upstream release.
   * Don't run sphinx during arch-only builds. Thanks to Helmut Grohne for
     the initial patch! Closes: #895108.
 
- -- Stephen Kitt <skitt@debian.org>  Sat, 07 Apr 2018 14:11:10 +0200
+ -- Stephen Kitt <skitt@debian.org>  Sat, 07 Apr 2018 15:00:23 +0200
 
 python-evdev (0.7.0+dfsg-2) unstable; urgency=medium
 
