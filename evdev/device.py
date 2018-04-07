@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import os
+import contextlib
 import collections
 
 from evdev import _input, ecodes, util
@@ -107,7 +108,7 @@ class InputDevice(EventIO):
     A linux input device from which input events can be read.
     '''
 
-    __slots__ = ('fn', 'fd', 'info', 'name', 'phys', '_rawcapabilities',
+    __slots__ = ('fn', 'fd', 'info', 'name', 'phys', 'uniq', '_rawcapabilities',
                  'version', 'ff_effects_count')
 
     def __init__(self, dev):
@@ -142,6 +143,9 @@ class InputDevice(EventIO):
 
         #: The physical topology of the device.
         self.phys = info_res[5]
+
+        #: The unique address of the device.
+        self.uniq = info_res[6]
 
         #: The evdev protocol version.
         self.version = _input.ioctl_EVIOCGVERSION(self.fd)
@@ -256,7 +260,13 @@ class InputDevice(EventIO):
         '''
         Two devices are equal if their :data:`info` attributes are equal.
         '''
-        return isinstance(other, self.__class__) and self.info == other.info
+        return isinstance(other, self.__class__) and self.info == other.info \
+            and self.path == other.path
+
+    def __ne__(self, other):
+        # Python 2 compatibility. Python 3 automatically negates the value of
+        # __eq__, in case __ne__ is not defined.
+        return not self == other
 
     def __str__(self):
         msg = 'device {}, name "{}", phys "{}"'
@@ -300,6 +310,16 @@ class InputDevice(EventIO):
         '''
 
         _input.ioctl_EVIOCGRAB(self.fd, 0)
+
+    @contextlib.contextmanager
+    def grab_context(self):
+        '''
+        A context manager for the duration of which only the current
+        process will be able to receive events from the device.
+        '''
+        self.grab()
+        yield
+        self.ungrab()
 
     def upload_effect(self, effect):
         '''

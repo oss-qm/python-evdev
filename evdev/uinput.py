@@ -3,6 +3,7 @@
 import os
 import stat
 import time
+from collections import defaultdict
 
 from evdev import _uinput
 from evdev import ecodes, util, device
@@ -41,9 +42,15 @@ class UInput(EventIO):
         devices : InputDevice|str
           Varargs of InputDevice instances or paths to input devices.
 
+        filtered_types : Tuple[event type codes]
+          Event types to exclude from the capabilities of the uinput device.
+
         **kwargs
           Keyword arguments to UInput constructor (i.e. name, vendor etc.).
         '''
+
+        # TODO: Move back to the argument list once Python 2 support is dropped.
+        filtered_types = kwargs.pop('filtered_types', (ecodes.EV_SYN, ecodes.EV_FF))
 
         device_instances = []
         for dev in devices:
@@ -51,11 +58,15 @@ class UInput(EventIO):
                 dev = device.InputDevice(str(dev))
             device_instances.append(dev)
 
-        all_capabilities = {}
-        for dev in device_instances:
-            all_capabilities.update(dev.capabilities())
+        all_capabilities = defaultdict(set)
 
-        del all_capabilities[ecodes.EV_SYN]
+        # Merge the capabilities of all devices into one dictionary.
+        for dev in device_instances:
+            for ev_type, ev_codes in dev.capabilities().items():
+                all_capabilities[ev_type].update(ev_codes)
+
+        for evtype in filtered_types:
+            del all_capabilities[evtype]
 
         return cls(events=all_capabilities, **kwargs)
 
