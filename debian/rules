@@ -2,11 +2,13 @@
 
 export PYBUILD_NAME=evdev
 
+DH_ADDONS = --with=python2 --with=python3
 %:
-	dh $@ --with python2,python3,sphinxdoc --buildsystem=pybuild
+	dh $@ $(DH_ADDONS) --buildsystem=pybuild
+build build-indep binary binary-indep: DH_ADDONS+=--with=sphinxdoc
+build-arch binary-arch:
 
-override_dh_auto_build:
-	dh_auto_build
+override_dh_auto_build-indep:
 	PYTHONPATH=. http_proxy='127.0.0.1:9' sphinx-build -N -bhtml docs/ build/html
 	PYTHONPATH=. http_proxy='127.0.0.1:9' sphinx-build -N -bman docs/ build/man
 

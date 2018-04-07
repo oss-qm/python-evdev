@@ -1,3 +1,10 @@
+python-evdev (0.7.0+dfsg-3) UNRELEASED; urgency=medium
+
+  * Don't run sphinx during arch-only builds. Thanks to Helmut Grohne for
+    the initial patch! Closes: #895108.
+
+ -- Stephen Kitt <skitt@debian.org>  Sat, 07 Apr 2018 14:11:10 +0200
+
 python-evdev (0.7.0+dfsg-2) unstable; urgency=medium
 
   * Limit the architecture to linux-any. Closes: #875624.
