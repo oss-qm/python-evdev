@@ -3,6 +3,7 @@ python-evdev (0.8.1+dfsg-1) UNRELEASED; urgency=medium
   * New upstream release.
   * Don't run sphinx during arch-only builds. Thanks to Helmut Grohne for
     the initial patch! Closes: #895108.
+  * Install the examples.
 
  -- Stephen Kitt <skitt@debian.org>  Sat, 07 Apr 2018 15:00:23 +0200
 
