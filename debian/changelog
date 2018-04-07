@@ -5,6 +5,7 @@ python-evdev (0.8.1+dfsg-1) UNRELEASED; urgency=medium
     the initial patch! Closes: #895108.
   * Install the examples.
   * Standards-Version 4.1.3, no change required.
+  * Migrate to Salsa.
 
  -- Stephen Kitt <skitt@debian.org>  Sat, 07 Apr 2018 15:00:23 +0200
 
