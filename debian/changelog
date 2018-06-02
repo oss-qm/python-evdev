@@ -1,4 +1,4 @@
-python-evdev (1.0.0+dfsg-1) UNRELEASED; urgency=medium
+python-evdev (1.0.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release.
   * Drop X-Python-Version, the minimum versions are satisfied
@@ -6,7 +6,7 @@ python-evdev (1.0.0+dfsg-1) UNRELEASED; urgency=medium
   * Switch to debhelper compatibility level 11.
   * Standards-Version 4.1.4, no further change required.
 
- -- Stephen Kitt <skitt@debian.org>  Sat, 02 Jun 2018 17:02:46 +0200
+ -- Stephen Kitt <skitt@debian.org>  Sat, 02 Jun 2018 17:38:07 +0200
 
 python-evdev (0.8.1+dfsg-1) unstable; urgency=medium
 
