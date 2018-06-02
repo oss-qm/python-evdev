@@ -66,7 +66,8 @@ class UInput(EventIO):
                 all_capabilities[ev_type].update(ev_codes)
 
         for evtype in filtered_types:
-            del all_capabilities[evtype]
+            if evtype in all_capabilities:
+                del all_capabilities[evtype]
 
         return cls(events=all_capabilities, **kwargs)
 
@@ -136,11 +137,15 @@ class UInput(EventIO):
                 # Handle max, min, fuzz, flat.
                 if isinstance(code, (tuple, list, device.AbsInfo)):
                     # Flatten (ABS_Y, (0, 255, 0, 0, 0, 0)) to (ABS_Y, 0, 255, 0, 0, 0, 0).
-                    f = [code[0]]; f += code[1]
+                    f = [code[0]]
+                    f.extend(code[1])
+                    # Ensure the tuple is always 6 ints long, since uinput.c:uinput_create
+                    # does little in the way of checking the length.
+                    f.extend([0] * (6 - len(code[1])))
                     absinfo.append(f)
                     code = code[0]
 
-                # TODO: a lot of unnecessary packing/unpacking
+                # TODO: remove a lot of unnecessary packing/unpacking
                 _uinput.enable(self.fd, etype, code)
 
         # Create the uinput device.
@@ -197,7 +202,7 @@ class UInput(EventIO):
     def capabilities(self, verbose=False, absinfo=True):
         '''See :func:`capabilities <evdev.device.InputDevice.capabilities>`.'''
         if self.device is None:
-            raise UInputError('input device not opened - cannot read capabilites')
+            raise UInputError('input device not opened - cannot read capabilities')
 
         return self.device.capabilities(verbose, absinfo)
 
@@ -228,7 +233,7 @@ class UInput(EventIO):
         #:bug: the device node might not be immediately available
         time.sleep(0.1)
 
-        for fn in util.list_devices('/dev/input/'):
-            d = device.InputDevice(fn)
+        for path in util.list_devices('/dev/input/'):
+            d = device.InputDevice(path)
             if d.name == self.name:
                 return d

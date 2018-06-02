@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import os
+import warnings
 import contextlib
 import collections
 
@@ -8,14 +9,10 @@ from evdev import _input, ecodes, util
 from evdev.events import InputEvent
 
 try:
-    from evdev.eventio_async import EventIO
+    from evdev.eventio_async import EventIO, EvdevError
 except ImportError:
-    from evdev.eventio import EventIO
+    from evdev.eventio import EventIO, EvdevError
 
-
-#--------------------------------------------------------------------------
-class EvdevError(Exception):
-    pass
 
 #--------------------------------------------------------------------------
 _AbsInfo = collections.namedtuple(
@@ -108,7 +105,7 @@ class InputDevice(EventIO):
     A linux input device from which input events can be read.
     '''
 
-    __slots__ = ('fn', 'fd', 'info', 'name', 'phys', 'uniq', '_rawcapabilities',
+    __slots__ = ('path', 'fd', 'info', 'name', 'phys', 'uniq', '_rawcapabilities',
                  'version', 'ff_effects_count')
 
     def __init__(self, dev):
@@ -120,7 +117,7 @@ class InputDevice(EventIO):
         '''
 
         #: Path to input device.
-        self.fn = dev if not hasattr(dev, '__fspath__') else dev.__fspath__()
+        self.path = dev if not hasattr(dev, '__fspath__') else dev.__fspath__()
 
         # Certain operations are possible only when the device is opened in
         # read-write mode.
@@ -165,6 +162,7 @@ class InputDevice(EventIO):
 
     def _capabilities(self, absinfo=True):
         res = {}
+
         for etype, ecodes in self._rawcapabilities.items():
             for code in ecodes:
                 l = res.setdefault(etype, [])
@@ -270,14 +268,14 @@ class InputDevice(EventIO):
 
     def __str__(self):
         msg = 'device {}, name "{}", phys "{}"'
-        return msg.format(self.fn, self.name, self.phys)
+        return msg.format(self.path, self.name, self.phys)
 
     def __repr__(self):
-        msg = (self.__class__.__name__, self.fn)
+        msg = (self.__class__.__name__, self.path)
         return '{}({!r})'.format(*msg)
 
     def __fspath__(self):
-        return self.fn
+        return self.path
 
     def close(self):
         if self.fd > -1:
@@ -326,7 +324,7 @@ class InputDevice(EventIO):
         Upload a force feedback effect to a force feedback device.
         '''
 
-        data = bytes(buffer(effect)[:])
+        data = memoryview(effect).tobytes()
         ff_id = _input.upload_effect(self.fd, data)
         return ff_id
 
@@ -373,3 +371,9 @@ class InputDevice(EventIO):
             return util.resolve_ecodes(ecodes.KEY, active_keys)
 
         return active_keys
+
+    @property
+    def fn(self):
+        msg = 'Please use {0}.path instead of {0}.fn'.format(self.__class__.__name__)
+        warnings.warn(msg, DeprecationWarning, stacklevel=2)
+        return self.path
