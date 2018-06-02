@@ -4,6 +4,7 @@ python-evdev (1.0.0+dfsg-1) UNRELEASED; urgency=medium
   * Drop X-Python-Version, the minimum versions are satisfied
     everywhere.
   * Switch to debhelper compatibility level 11.
+  * Standards-Version 4.1.4, no further change required.
 
  -- Stephen Kitt <skitt@debian.org>  Sat, 02 Jun 2018 17:02:46 +0200
 
