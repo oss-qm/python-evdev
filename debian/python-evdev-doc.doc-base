@@ -7,5 +7,5 @@ Abstract: This manual describes what python-evdev is
 Section: Programming/Python
 
 Format: HTML
-Index: /usr/share/doc/python-evdev-doc/html/index.html
-Files: /usr/share/doc/python-evdev-doc/html/*.html
+Index: /usr/share/doc/python-evdev/html/index.html
+Files: /usr/share/doc/python-evdev/html/*.html
