@@ -1,3 +1,9 @@
+python-evdev (1.0.0+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Stephen Kitt <skitt@debian.org>  Sat, 02 Jun 2018 17:02:46 +0200
+
 python-evdev (0.8.1+dfsg-1) unstable; urgency=medium
 
   * New upstream release.
