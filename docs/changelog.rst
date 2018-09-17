@@ -1,6 +1,22 @@
 Changelog
 ---------
 
+1.1.2 (Sep 1, 2018)
+====================
+
+- Fix installation on kernels <= 4.4.
+
+- Fix uinput creation ignoring absinfo settings.
+
+
+1.1.0 (Aug 27, 2018)
+====================
+
+- Add support for handling force-feedback effect uploads (many thanks to `@ndreys`).
+
+- Fix typo preventing ff effects that need left coefficients from working.
+
+
 1.0.0 (Jun 02, 2018)
 ====================
 
@@ -335,6 +351,7 @@ Changelog
 .. _`@isia`:    https://github.com/isia
 .. _`@forsenonlhaimaisentito`: https://github.com/forsenonlhaimaisentito
 .. _`@paulo-raca`: https://github.com/paulo-raca
+.. _`@ndreys`: https://github.com/ndreys
 
 .. _issue21121: http://bugs.python.org/issue21121
 .. _`#63`:      https://github.com/gvalkov/python-evdev/issues/63

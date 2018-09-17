@@ -8,6 +8,8 @@ from collections import defaultdict
 from evdev import _uinput
 from evdev import ecodes, util, device
 from evdev.events import InputEvent
+import evdev.ff as ff
+import ctypes
 
 try:
     from evdev.eventio_async import EventIO
@@ -119,19 +121,37 @@ class UInput(EventIO):
         if not events:
             events = {ecodes.EV_KEY: ecodes.keys.keys()}
 
-        # The min, max, fuzz and flat values for the absolute axis for
-        # a given code.
-        absinfo = []
-
         self._verify()
 
         #: Write-only, non-blocking file descriptor to the uinput device node.
         self.fd = _uinput.open(devnode)
 
+        # Prepare the list of events for passing to _uinput.enable and _uinput.setup.
+        absinfo, prepared_events = self._prepare_events(events)
+
         # Set phys name
         _uinput.set_phys(self.fd, phys)
 
-        # Set device capabilities.
+        for etype, code in prepared_events:
+            _uinput.enable(self.fd, etype, code)
+
+        _uinput.setup(self.fd, name, vendor, product, version, bustype, absinfo)
+
+        # Create the uinput device.
+        _uinput.create(self.fd)
+
+        self.dll = ctypes.CDLL(_uinput.__file__)
+        self.dll._uinput_begin_upload.restype = ctypes.c_int
+        self.dll._uinput_end_upload.restype = ctypes.c_int
+
+        #: An :class:`InputDevice <evdev.device.InputDevice>` instance
+        #: for the fake input device. ``None`` if the device cannot be
+        #: opened for reading and writing.
+        self.device = self._find_device()
+
+    def _prepare_events(self, events):
+        '''Prepare events for passing to _uinput.enable and _uinput.setup'''
+        absinfo, prepared_events = [], []
         for etype, codes in events.items():
             for code in codes:
                 # Handle max, min, fuzz, flat.
@@ -144,17 +164,8 @@ class UInput(EventIO):
                     f.extend([0] * (6 - len(code[1])))
                     absinfo.append(f)
                     code = code[0]
-
-                # TODO: remove a lot of unnecessary packing/unpacking
-                _uinput.enable(self.fd, etype, code)
-
-        # Create the uinput device.
-        _uinput.create(self.fd, name, vendor, product, version, bustype, absinfo)
-
-        #: An :class:`InputDevice <evdev.device.InputDevice>` instance
-        #: for the fake input device. ``None`` if the device cannot be
-        #: opened for reading and writing.
-        self.device = self._find_device()
+                prepared_events.append((etype, code))
+        return absinfo, prepared_events
 
     def __enter__(self):
         return self
@@ -205,6 +216,31 @@ class UInput(EventIO):
             raise UInputError('input device not opened - cannot read capabilities')
 
         return self.device.capabilities(verbose, absinfo)
+
+    def begin_upload(self, effect_id):
+        upload = ff.UInputUpload()
+        upload.effect_id = effect_id
+
+        if self.dll._uinput_begin_upload(self.fd, ctypes.byref(upload)):
+            raise UInputError('Failed to begin uinput upload: ' + os.strerror())
+
+        return upload
+
+    def end_upload(self, upload):
+        if self.dll._uinput_end_upload(self.fd, ctypes.byref(upload)):
+            raise UInputError('Failed to end uinput upload: ' + os.strerror())
+
+    def begin_erase(self, effect_id):
+        erase = ff.UInputErase()
+        erase.effect_id = effect_id
+
+        if self.dll._uinput_begin_erase(self.fd, ctypes.byref(erase)):
+            raise UInputError('Failed to begin uinput erase: ' + os.strerror())
+        return erase
+
+    def end_erase(self, erase):
+        if self.dll._uinput_end_erase(self.fd, ctypes.byref(erase)):
+            raise UInputError('Failed to end uinput erase: ' + os.strerror())
 
     def _verify(self):
         '''
