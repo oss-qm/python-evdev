@@ -44,7 +44,7 @@ ecodes_c = Extension('evdev._ecodes', sources=['evdev/ecodes.c'], extra_compile_
 #-----------------------------------------------------------------------------
 kw = {
     'name':                 'evdev',
-    'version':              '1.0.0',
+    'version':              '1.1.2',
 
     'description':          'Bindings to the Linux input handling subsystem',
     'long_description':     open(pjoin(here, 'README.rst')).read(),
@@ -70,6 +70,7 @@ def create_ecodes(headers=None):
         headers = [
             '/usr/include/linux/input.h',
             '/usr/include/linux/input-event-codes.h',
+            '/usr/include/linux/uinput.h',
         ]
 
     headers = [header for header in headers if os.path.isfile(header)]

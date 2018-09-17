@@ -325,7 +325,7 @@ Specifying ``uinput`` device options
     ...         (e.ABS_X, AbsInfo(value=0, min=0, max=255,
     ...                           fuzz=0, flat=0, resolution=0)),
     ...         (e.ABS_Y, AbsInfo(0, 0, 255, 0, 0, 0)),
-    ...         (e.ABS_MT_POSITION_X, (0, 255, 128, 0)) ]
+    ...         (e.ABS_MT_POSITION_X, (0, 128, 255, 0)) ]
     ... }
 
     >>> ui = UInput(cap, name='example-device', version=0x3)
@@ -362,3 +362,75 @@ Create ``uinput`` device with capabilities of another device
 
 
 .. _`async/await`:  https://docs.python.org/3/library/asyncio-task.html
+
+Create ``uinput`` device capable of recieving FF-effects
+========================================================
+
+::
+
+    import asyncio
+    from evdev import UInput, categorize, ecodes
+
+    cap = {
+       ecodes.EV_FF:  [ecodes.FF_RUMBLE ],
+       ecodes.EV_KEY: [ecodes.KEY_A, ecodes.KEY_B]
+    }
+
+    ui = UInput(cap, name='test-controller', version=0x3)
+
+    async def print_events(device):
+        async for event in device.async_read_loop():
+            print(categorize(event))
+
+            # Wait for an EV_UINPUT event that will signal us that an
+            # effect upload/erase operation is in progress.
+            if event.type != ecodes.EV_UINPUT:
+                pass
+
+            if event.code == ecodes.UI_FF_UPLOAD:
+                upload = device.begin_upload(event.value)
+                upload.retval = 0
+
+                print(f'[upload] effect_id: {upload.effect_id}, type: {upload.effect.type}')
+                device.end_upload(upload)
+
+            elif event.code == ecodes.UI_FF_ERASE:
+                erase = device.begin_erase(event.value)
+                print(f'[erase] effect_id {erase.effect_id}')
+
+                erase.retval = 0
+                device.end_erase(erase)
+
+    asyncio.ensure_future(print_events(ui))
+    loop = asyncio.get_event_loop()
+    loop.run_forever()
+
+
+Injecting an FF-event into first FF-capable device found
+========================================================
+
+::
+
+    from evdev import ecodes, InputDevice, ff
+
+    # Find first EV_FF capable event device (that we have permissions to use).
+    for name in evdev.list_devices():
+        dev = InputDevice(name)
+        if ecodes.EV_FF in dev.capabilities():
+            break
+
+    rumble = ff.Rumble(strong_magnitude=0x0000, weak_magnitude=0xffff)
+    effect_type = ff.EffectType(ff_rumble_effect=rumble)
+    duration_ms = 1000
+
+    effect = ff.Effect(
+        ecodes.FF_RUMBLE, -1, 0,
+        ff.Trigger(0, 0),
+        ff.Replay(duration_ms, 0),
+        ff.EffectType(ff_rumble_effect=rumble)
+    )
+
+    repeat_count = 1
+    effect_id = dev.upload_effect(effect)
+    dev.write(e.EV_FF, effect_id, repeat_count)
+    dev.erase_effect(effect_id)
