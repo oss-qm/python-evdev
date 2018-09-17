@@ -267,6 +267,13 @@ Getting exclusive access to a device
     >>> dev.grab()  # become the sole recipient of all incoming input events
     >>> dev.ungrab()
 
+This functionality is also available as a context manager.
+
+::
+
+    >>> with dev.grab_context():
+    ...     pass
+
 
 Associating classes with event types
 ====================================
@@ -352,7 +359,7 @@ Create ``uinput`` device with capabilities of another device
 
     >>> from evdev import UInput, InputDevice
 
-    >>> mouse = InputDevice('/dev/input/event1')from evdev import UInput, InputDevice
+    >>> mouse = InputDevice('/dev/input/event1')
     >>> keybd = '/dev/input/event2'
 
     >>> ui = UInput.from_device(mouse, keybd, name='keyboard-mouse-device')
