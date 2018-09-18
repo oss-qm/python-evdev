@@ -9,6 +9,9 @@ Build-Depends: debhelper (>= 11~),
                python3-docutils,
                python-all-dev,
                python3-all-dev
+Build-Depends-Arch:
+               python-pytest,
+               python3-pytest
 Build-Depends-Indep:
                python3-sphinx,
                python3-sphinx-rtd-theme

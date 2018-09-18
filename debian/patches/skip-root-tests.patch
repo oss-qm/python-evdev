@@ -1,0 +1,54 @@
+Description: Skip tests requiring root
+Author: Stephen Kitt <skitt@debian.org>
+
+--- a/tests/test_uinput.py
++++ b/tests/test_uinput.py
+@@ -1,7 +1,7 @@
+ # encoding: utf-8
+ 
+ from select import select
+-from pytest import raises, fixture
++from pytest import raises, fixture, mark
+ 
+ from evdev import uinput, ecodes, events, device, util
+ 
+@@ -30,6 +30,7 @@
+     return False
+ 
+ #-----------------------------------------------------------------------------
++@mark.skip(reason="Requires root")
+ def test_open(c):
+     ui = uinput.UInput(**c)
+     args = (c['bustype'], c['vendor'], c['product'], c['version'])
+@@ -37,6 +38,7 @@
+     ui.close()
+     assert not device_exists(*args)
+ 
++@mark.skip(reason="Requires root")
+ def test_open_context(c):
+     args = (c['bustype'], c['vendor'], c['product'], c['version'])
+     with uinput.UInput(**c):
+@@ -48,6 +50,7 @@
+         c['name'] = 'a' * 150
+         uinput.UInput(**c)
+ 
++@mark.skip(reason="Requires root")
+ def test_enable_events(c):
+     e = ecodes
+     c['events'] = {e.EV_KEY : [e.KEY_A, e.KEY_B, e.KEY_C]}
+@@ -57,6 +60,7 @@
+         assert e.EV_KEY in cap
+         assert sorted(cap[e.EV_KEY]) == sorted(c['events'][e.EV_KEY])
+ 
++@mark.skip(reason="Requires root")
+ def test_abs_values(c):
+     e = ecodes
+     c['events'] = {
+@@ -80,6 +84,7 @@
+         c = ui.capabilities(verbose=False, absinfo=False)
+         assert c[e.EV_ABS] == list((0, 1))
+ 
++@mark.skip(reason="Requires root")
+ def test_write(c):
+     with uinput.UInput(**c) as ui:
+         d = ui.device

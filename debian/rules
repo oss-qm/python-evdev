@@ -15,3 +15,6 @@ override_dh_auto_build-indep:
 # By default, changelog.html ends up being compressed
 override_dh_compress:
 	dh_compress -X.html
+
+# Avoid running tests on arch-all builds
+override_dh_auto_test-indep:
