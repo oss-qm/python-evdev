@@ -3,14 +3,18 @@ Author: Stephen Kitt <skitt@debian.org>
 
 --- a/docs/install.rst
 +++ b/docs/install.rst
-@@ -8,19 +8,19 @@
+@@ -8,22 +8,22 @@
  
      <div style="margin:1em;">
      <a href="https://www.archlinux.org/packages/extra/x86_64/python-evdev/">
 -      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-archlinux.png">
 +      Arch Linux
      </a>
-     <a href="https://packages.ubuntu.com/artful/python-evdev">
+     <a href="https://packages.debian.org/search?searchon=names&keywords=python-evdev">
+-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-debian.png">
++      Debian
+     </a>
+     <a href="https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=python-evdev&searchon=names">
 -      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-ubuntu.png">
 +      Ubuntu
      </a>
