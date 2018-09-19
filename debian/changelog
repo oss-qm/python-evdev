@@ -5,6 +5,7 @@ python-evdev (1.1.2+dfsg-1) UNRELEASED; urgency=medium
   * Ensure that the module is available when the documentation is built,
     so that the API documentation can be included. As a result, the
     documentation is now architecture-dependent. Closes: #908990.
+  * Set “Rules-Requires-Root: no”.
 
  -- Stephen Kitt <skitt@debian.org>  Mon, 17 Sep 2018 09:58:29 +0200
 
