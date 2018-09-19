@@ -6,6 +6,7 @@ python-evdev (1.1.2+dfsg-1) UNRELEASED; urgency=medium
     so that the API documentation can be included. As a result, the
     documentation is now architecture-dependent. Closes: #908990.
   * Set “Rules-Requires-Root: no”.
+  * Standards-Version 4.2.1, no further change required.
 
  -- Stephen Kitt <skitt@debian.org>  Mon, 17 Sep 2018 09:58:29 +0200
 
