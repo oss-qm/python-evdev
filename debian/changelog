@@ -1,4 +1,4 @@
-python-evdev (1.1.2+dfsg-1) UNRELEASED; urgency=medium
+python-evdev (1.1.2+dfsg-1) unstable; urgency=medium
 
   * New upstream release.
   * Enable tests, skipping those requiring root. Closes: #908988.
@@ -8,7 +8,7 @@ python-evdev (1.1.2+dfsg-1) UNRELEASED; urgency=medium
   * Set “Rules-Requires-Root: no”.
   * Standards-Version 4.2.1, no further change required.
 
- -- Stephen Kitt <skitt@debian.org>  Mon, 17 Sep 2018 09:58:29 +0200
+ -- Stephen Kitt <skitt@debian.org>  Wed, 19 Sep 2018 22:49:53 +0200
 
 python-evdev (1.0.0+dfsg-1) unstable; urgency=medium
 
