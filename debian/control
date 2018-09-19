@@ -3,19 +3,17 @@ Maintainer: Stephen Kitt <skitt@debian.org>
 Section: python
 Priority: optional
 Build-Depends: debhelper (>= 11~),
-               dh-python,
+               dh-python (>= 3.20180313~),
                python-setuptools,
                python3-setuptools,
                python3-docutils,
                python-all-dev,
-               python3-all-dev
-Build-Depends-Arch:
+               python3-all-dev,
                python-pytest,
-               python3-pytest
-Build-Depends-Indep:
+               python3-pytest,
                python3-sphinx,
                python3-sphinx-rtd-theme
-Build-Conflicts-Indep: python-sphinx
+Build-Conflicts: python-sphinx
 Standards-Version: 4.1.4
 Vcs-Browser: https://salsa.debian.org/debian/python-evdev
 Vcs-Git: https://salsa.debian.org/debian/python-evdev.git
@@ -61,10 +59,11 @@ Description: Python 3 bindings for the Linux input subsystem
  This package installs the library for Python 3.
 
 Package: python-evdev-doc
-Architecture: all
+Architecture: linux-any
 Section: doc
 Depends: ${sphinxdoc:Depends},
          ${misc:Depends}
+Built-Using: ${sphinxdoc:Built-Using}
 Description: Python bindings for the Linux input subsystem (docs)
  This package provides bindings to the generic input event interface
  in Linux. The evdev interface serves the purpose of passing events

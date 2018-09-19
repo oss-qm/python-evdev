@@ -1,20 +1,18 @@
 #!/usr/bin/make -f
 
 export PYBUILD_NAME=evdev
+py3_builddir = $(shell pybuild --print build_dir --interpreter python3)
 
-DH_ADDONS = --with=python2 --with=python3
 %:
-	dh $@ $(DH_ADDONS) --buildsystem=pybuild
-build build-indep binary binary-indep: DH_ADDONS+=--with=sphinxdoc
-build-arch binary-arch:
+	dh $@ --with=python2,python3,sphinxdoc --buildsystem=pybuild
 
-override_dh_auto_build-indep:
-	PYTHONPATH=. http_proxy='127.0.0.1:9' sphinx-build -N -bhtml docs/ build/html
-	PYTHONPATH=. http_proxy='127.0.0.1:9' sphinx-build -N -bman docs/ build/man
+override_dh_auto_build:
+	dh_auto_build
+ifeq (,$(findstring nodoc, $(DEB_BUILD_OPTIONS)))
+	PYTHONPATH=$(py3_builddir) http_proxy='127.0.0.1:9' sphinx-build -N -bhtml docs/ build/html
+	PYTHONPATH=$(py3_builddir) http_proxy='127.0.0.1:9' sphinx-build -N -bman docs/ build/man
+endif
 
 # By default, changelog.html ends up being compressed
 override_dh_compress:
 	dh_compress -X.html
-
-# Avoid running tests on arch-all builds
-override_dh_auto_test-indep:
