@@ -9,8 +9,8 @@ py3_builddir = $(shell pybuild --print build_dir --interpreter python3)
 override_dh_auto_build:
 	dh_auto_build
 ifeq (,$(findstring nodoc, $(DEB_BUILD_OPTIONS)))
-	PYTHONPATH=$(py3_builddir) http_proxy='127.0.0.1:9' sphinx-build -N -bhtml docs/ build/html
-	PYTHONPATH=$(py3_builddir) http_proxy='127.0.0.1:9' sphinx-build -N -bman docs/ build/man
+	PYTHONPATH=$(py3_builddir) http_proxy='127.0.0.1:9' python3 -m sphinx -N -bhtml docs/ build/html
+	PYTHONPATH=$(py3_builddir) http_proxy='127.0.0.1:9' python3 -m sphinx -N -bman docs/ build/man
 endif
 
 # By default, changelog.html ends up being compressed
