@@ -8,22 +8,22 @@ Python-evdev has been packaged for the following GNU/Linux distributions:
 
     <div style="margin:1em;">
     <a href="https://www.archlinux.org/packages/extra/x86_64/python-evdev/">
-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-archlinux.png">
+      Arch Linux
     </a>
     <a href="https://packages.debian.org/search?searchon=names&keywords=python-evdev">
-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-debian.png">
+      Debian
     </a>
     <a href="https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=python-evdev&searchon=names">
-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-ubuntu.png">
+      Ubuntu
     </a>
     <a href="https://apps.fedoraproject.org/packages/python3-evdev">
-      <img height="30px" src="_static/pacifica-icon-set/distributor-logo-fedora.png">
+      Fedora
     </a>
     <!--
-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-raspbian.png"></a>
-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-debian.png"></a>
-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-linux-mint.png"></a>
-    <a href=""><img height="40px" src="_static/pacifica-icon-set/distributor-logo-opensuse.png"></a>
+    <a href="">Raspbian</a>
+    <a href="">Debian</a>
+    <a href="">Linux Mint</a>
+    <a href="">OpenSuse</a>
     --!>
     </div>
 
