@@ -1,5 +1,5 @@
-Description: Skip tests requiring root
-Author: Stephen Kitt <skitt@debian.org>
+Subject: Skip tests requiring root
+From: Stephen Kitt <skitt@debian.org>
 
 --- a/tests/test_uinput.py
 +++ b/tests/test_uinput.py

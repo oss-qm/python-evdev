@@ -1,5 +1,5 @@
-Description: Adjust documentation after removing logos
-Author: Stephen Kitt <skitt@debian.org>
+Subject: Adjust documentation after removing logos
+From: Stephen Kitt <skitt@debian.org>
 
 --- a/docs/install.rst
 +++ b/docs/install.rst
