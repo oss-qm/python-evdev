@@ -21,3 +21,6 @@ __pycache__
 evdev/_ecodes.py
 evdev/_input.py
 evdev/_uinput.py
+
+.cache
+.pybuild
