@@ -2,8 +2,8 @@ Source: python-evdev
 Maintainer: Stephen Kitt <skitt@debian.org>
 Section: python
 Priority: optional
-Build-Depends: debhelper (>= 11~),
-               dh-python (>= 3.20180313~),
+Build-Depends: debhelper (>= 10),
+               dh-python (>= 2.20170125),
                python-setuptools,
                python3-setuptools,
                python3-docutils,
